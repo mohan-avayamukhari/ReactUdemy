@@ -1,12 +1,14 @@
 import { useState } from "react";
 import BookEdit from "./BookEdit"
+import useBooksContext from "./hooks/useBooksContext";
 
-const BookShow = ({book, deleteBook, editBook}) => {
+const BookShow = ({book}) => {
   const [edit, setEdit] = useState(false)
+  const {editBookById, deleteBookById} = useBooksContext();
 
   const handleEdit = (event, id, newTitle) => {
     event.preventDefault();
-    editBook(id, newTitle);
+    editBookById(id, newTitle);
     setEdit(false);
   }
 
@@ -15,7 +17,7 @@ const BookShow = ({book, deleteBook, editBook}) => {
       <img src={`https://picsum.photos/seed/${book.id}/300/200`} alt="book"/>
       {edit? <BookEdit book={book} handleEdit={handleEdit}/>:<div>{book.title}</div>}
       <div className="actions">
-        <button className="delete" onClick={() => deleteBook(book.id)}>delete</button>
+        <button className="delete" onClick={() => deleteBookById(book.id)}>delete</button>
         <button className="edit" onClick={() => setEdit(true)}>edit</button>
       </div>
     </div>
